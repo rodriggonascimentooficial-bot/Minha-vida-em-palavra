@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Livro - Bege, Vinho e Dourado</title>
+    <!-- Inclui a biblioteca html2pdf.js para gerar PDF -->
+    <script src="cdnjs.cloudflare.com"></script>
+    <link href="fonts.googleapis.com" rel="stylesheet">
+    <style>
+        /* Estilos CSS com paleta Bege, Vinho e Dourado */
+        :root {
+            --bg-color: #fdf5e6; /* Bege claro (Moccasin) */
+            --main-color: #722F37; /* Vinho / Burgundy */
+            --accent-color: #FFD700; /* Dourado (Gold) */
+            --header-bg: #e0d8c0; /* Bege ligeiramente mais escuro */
+            --text-color: #333; 
+            --card-bg: #ffffff; 
+        }
+
+        body {
+            font-family: 'Georgia', serif; /* Fonte clássica */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--main-color); /* Logo em vinho */
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li a {
+            color: var(--main-color);
+            text-decoration: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-color); /* Dourado no hover */
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        main {
+            padding: 40px 20px;
+            background-color: var(--card-bg);
+            margin: 20px auto;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            border-radius: 5px;
+        }
+
+        h1, h2 {
+            color: var(--main-color);
+            border-bottom: 2px solid var(--accent-color); /* Linha dourada */
+            padding-bottom: 10px;
+        }
+        
+        /* Estilos para a seção Meus Livros e Leitura */
+        .book-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--header-bg);
+        }
+        
+        .btn {
+            background-color: var(--main-color);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #57232a; /* Vinho mais escuro no hover */
+        }
+
+        .download-btn-footer {
+            background-color: var(--accent-color); /* Dourado para o botão de download */
+            color: var(--main-color);
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* Área de Visualização do Livro (Modal simples) */
+        #bookViewer {
+            display: none; 
+            padding: 20px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--main-color);
+            margin-top: 20px;
+        }
+        #bookContentArea {
+            font-size: 1.1em;
+            color: var(--text-color);
+            min-height: 200px;
+            border-bottom: 1px solid var(--main-color);
+            padding-bottom: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="container">
+            <div class="logo">Meu Livro 📚</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Menu Inicial</a></li>
+                <li><a href="#escrever">Escrever Meu Livro</a></li>
+                <li><a href="#meuslivros">Meus Livros</a></li>
+                <li><a href="#sobre">Sobre Nós</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="home">
+            <h1>Bem-vindo ao Meu Livro!</h1>
+            <p>Navegue pelos menus utilizando nossa paleta sofisticada de bege, vinho e dourado.</p>
+        </section>
+
+        <!-- Seção Escrever Livro (Omitida para brevidade, use a versão anterior se precisar dos campos) -->
+        <section id="escrever" style="display: none;">
+             <h2>Escrever Meu Livro</h2>
+             <p>Campos para Título, Capa e Ícones estariam aqui. Use o código anterior para preencher esta seção.</p>
+        </section>
+        
+        <section id="meuslivros" style="display: none;">
+            <h2>Meus Livros Publicados 📖</h2>
+            <p>Clique em "Ler Livro" para visualizar o conteúdo e gerar o PDF.</p>
+            <div id="bookList">
+                <div class="book-item" data-title="Aventuras na Floresta" data-content="Capítulo 1: A jornada começou ao amanhecer, com os primeiros raios dourados do sol iluminando a névoa do vale. O ar tinha cheiro de terra molhada e pinhas. Um misterioso mapa antigo guiava nossos passos em direção ao desconhecido. Cada página virada era um novo desafio.">
+                    <span>🌲 Aventuras na Floresta</span>
+                    <button class="btn" onclick="readBook(this)">Ler Livro 📖</button>
+                </div>
+                 <div class="book-item" data-title="Receitas de Família" data-content="Prefácio: Este livro é uma homenagem às avós que cozinhavam com amor. Receita Secreta de Bolo de Vinho: Ingredientes: 2 xícaras de farinha, 1 xícara de vinho tinto, amor e paciência. Misture tudo e asse em fogo médio. Fica delicioso!">
+                    <span>🍷 Receitas de Família</span>
+                    <button class="btn" onclick="readBook(this)">Ler Livro 📖</button>
+                </div>
+            </div>
+            
+            <!-- Área de Visualização do Livro e Download -->
+            <div id="bookViewer">
+                <h3 id="bookTitleViewer"></h3>
+                <div id="bookContentArea"></div>
+                <button class="btn download-btn-footer" onclick="generatePdf()">Download do Livro em PDF</button>
+            </div>
+
+        </section>
+
+        <section id="sobre" style="display: none;">
+            <h2>Sobre Nós: A Magia da Criação ✨</h2>
+            <p>
+                **Meu Livro** é um portal para a autoexpressão. Nossa paleta de cores (bege, vinho e dourado) foi escolhida para evocar sofisticação e conforto, criando um ambiente acolhedor para a sua criatividade.
+            </p>
+            <p>
+                **Impacto:** Em um mundo acelerado, escrever um livro é um ato de resistência criativa. É a prova tangível de que seus pensamentos importam e merecem um espaço no mundo. Nós transformamos o invisível em inesquecível.
+            </p>
+        </section>
+        
+    </main>
+
+    <!-- Script JavaScript para a Interatividade -->
+    <script>
+        // Função de navegação (SPA)
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const sections = document.querySelectorAll('main section');
+            const navigate = (targetId) => {
+                sections.forEach(sec => sec.style.display = 'none');
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                }
+                navLinks.forEach(l => l.classList.remove('active'));
+                document.querySelector(`a[href="#${targetId}"]`).classList.add('active');
+            };
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    navigate(targetId);
+                });
+            });
+            navigate('home');
+        });
+
+        // Variável global para armazenar o livro atual para o PDF
+        let currentBookData = { title: '', content: '' };
+
+        // Função para ler o livro e mostrar o visualizador
+        function readBook(buttonElement) {
+            const item = buttonElement.closest('.book-item');
+            const title = item.getAttribute('data-title');
+            const content = item.getAttribute('data-content');
+
+            // Armazena globalmente para uso na função generatePdf()
+            currentBookData.title = title;
+            currentBookData.content = content;
+
+            // Preenche o visualizador na tela
+            document.getElementById('bookTitleViewer').innerText = title;
+            document.getElementById('bookContentArea').innerText = content;
+            document.getElementById('bookViewer').style.display = 'block'; // Mostra a janela de leitura
+        }
+
+        // Função para gerar o PDF usando html2pdf.js
+        function generatePdf() {
+            if (!currentBookData.title) {
+                alert("Por favor, selecione um livro para ler primeiro.");
+                return;
+            }
+
+            // O conteúdo a ser transformado em PDF
+            const contentToPdf = document.getElementById('bookViewer');
+            
+            // Opções de configuração para o html2pdf
+            const options = {
+                margin: 10,
+                filename: `${currentBookData.title.replace(/\s/g, '_')}_MeuLivro.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, logging: true, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Gera e baixa o PDF automaticamente
+            html2pdf().from(contentToPdf).set(options).save();
+        }
+
+    </script>
+
+</body>
+</html>
