@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Vida em Palavras</title>
+    <!-- Importação de fonte elegante do Google Fonts -->
+    <link href="fonts.googleapis.com" rel="stylesheet">
+    
+    <style>
+        /* CSS Integrado */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            /* Cor de fundo do menu: Bege Claro */
+            background-color: #fdf5e6; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-height: 70px;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            /* Cor do Título: Vinho Sombreado */
+            color: rgba(101, 31, 63, 0.9); 
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            width: 50%;
+            justify-content: space-around;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: #5d4037;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            border-bottom: 2px solid #5d4037;
+        }
+
+        /* Conteúdo das abas */
+        .tab-content {
+            padding: 20px;
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        [data-tab-content] {
+            display: none;
+        }
+
+        [data-tab-content].active {
+            display: block;
+        }
+
+        /* Estilo para o editor de texto e inputs */
+        .editor-window {
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fafafa;
+        }
+
+        #story-editor {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            line-height: 1.6;
+            padding: 0;
+            resize: none;
+            background: transparent;
+        }
+
+        input[type="text"], button, input[type="file"] {
+            padding: 10px;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background-color: #5d4037;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .book-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+        
+        .book-item button {
+            width: auto;
+            display: inline;
+            margin: 0 5px;
+            padding: 5px 10px;
+        }
+
+        /* Responsividade básica */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                display: none;
+            }
+            .nav-links a {
+                padding: 10px;
+            }
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .logo {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <!-- Título atualizado para "Minha Vida em Palavras" -->
+            <div class="logo">Minha Vida em Palavras</div>
+            <ul class="nav-links">
+                <li><a data-tab-target="#home" class="active">Menu Inicial</a></li>
+                <li><a data-tab-target="#start-book">Iniciar meu Livro</a></li>
+                <li><a data-tab-target="#my-books">Meus Livros</a></li>
+                <li><a data-tab-target="#about">Sobre nós</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="tab-content">
+        <!-- Aba Menu Inicial (Ativa por padrão) -->
+        <div id="home" data-tab-content class="active">
+            <h1>Bem-vindo(a)!</h1>
+            <p>Você é um universo em miniatura, um mapa de experiências, sonhos e superações. Há continentes de coragem e oceanos de sentimentos dentro de você, muitos ainda inexplorados.</p>
+            <p>Não tenha medo de fazer a viagem mais importante da sua vida: a jornada para dentro de si mesmo. Descubra suas paixões secretas, reconheça suas forças e aceite suas vulnerabilidades. Esse mundo interno é a fonte da sua autenticidade.</p>
+            <p>E, ao descobrir esse mundo, não guarde o mapa apenas para si. Conte sua história.</p>
+        </div>
+
+        <!-- Aba Iniciar meu Livro -->
+        <div id="start-book" data-tab-content>
+            <h1>Iniciar novo Livro</h1>
+            <label for="book-title">Título do Livro:</label>
+            <input type="text" id="book-title" placeholder="Digite o título aqui...">
+            <div class="editor-window">
+                <textarea id="story-editor" rows="20" placeholder="Escreva sua história aqui, com linhas e margens elegantes..."></textarea>
+            </div>
+            <button onclick="saveBookDraft()">Salvar Rascunho</button>
+            <div class="upload-section">
+                <label for="cover-upload" style="margin-top: 20px;">Upload da Capa (quando finalizado):</label>
+                <input type="file" id="cover-upload" accept="image/png, image/jpeg">
+                <button onclick="finalizeBook()">Finalizar Livro e Fazer Upload</button>
+            </div>
+        </div>
+
+        <!-- Aba Meus Livros -->
+        <div id="my-books" data-tab-content>
+            <h1>Meus Livros</h1>
+            <p>Aqui estarão listados seus livros. Use as opções para gerenciar suas obras.</p>
+            <div class="book-item">
+                <span>Meu Primeiro Livro (Rascunho)</span>
+                <div>
+                    <button onclick="readBook('id1')">Ler</button>
+                    <button onclick="editBook('id1')">Editar</button>
+                    <button onclick="saveBookEdition('id1')">Salvar Edição</button>
+                    <button onclick="downloadPDF('id1')">Download PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aba Sobre Nós -->
+        <div id="about" data-tab-content>
+            <h1>Sobre Nós</h1>
+            <p><strong>Bem-vindo(a), contador de histórias!</strong> Nossa plataforma foi criada com a paixão por transformar ideias em narrativas cativantes. Acreditamos no poder da palavra escrita e queremos fornecer a você as ferramentas mais intuitivas e elegantes para que sua jornada criativa seja leve e inspiradora, do rascunho à publicação. Escreva, edite e compartilhe seu mundo conosco.</p>
+        </div>
+    </main>
+
+    <script>
+        // JavaScript Integrado
+        const tabs = document.querySelectorAll('[data-tab-target]');
+        const tabContents = document.querySelectorAll('[data-tab-content]');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = document.querySelector(tab.dataset.tabTarget);
+                
+                tabContents.forEach(tabContent => {
+                    tabContent.classList.remove('active');
+                });
+                tabs.forEach(t => {
+                    t.classList.remove('active');
+                });
+
+                target.classList.add('active');
+                tab.classList.add('active');
+            });
+        });
+
+        // Funções de interação (simuladas com alertas)
+        function saveBookDraft() {
+            const title = document.getElementById('book-title').value;
+            alert(`Rascunho do livro "${title || 'Sem Título'}" salvo localmente.`);
+        }
+
+        function finalizeBook() {
+            alert("Livro finalizado! (O upload real e a geração de PDF funcionam apenas com um servidor/backend).");
+        }
+
+        function readBook(bookId) {
+            alert(`Lendo o livro ID: ${bookId}.`);
+        }
+
+        function editBook(bookId) {
+            alert(`Editando o livro ID: ${bookId}.`);
+        }
+
+        function saveBookEdition(bookId) {
+             alert(`Edição do livro ID: ${bookId} salva.`);
+        }
+
+        function downloadPDF(bookId) {
+            alert(`Gerando PDF para download do livro ID: ${bookId}.`);
+        }
+    </script>
+</body>
+</html>
